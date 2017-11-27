@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+  Button,
   Platform,
   StyleSheet,
   Text,
@@ -22,18 +23,10 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-const MyView = ({ innerRef, ...rest }) => <View ref={innerRef} {...rest} />;
-
 const BasicAutocomplete = ({items, onChange}) => (
   <Downshift
-    environment={{
-      addEventListener: () => {},
-      removeEventListener: () => {},
-      document: {
-        getElementById: () => {},
-      },
-    }}
     render={({
+      getButtonProps,
       getRootProps,
       getInputProps,
       getItemProps,
@@ -43,10 +36,13 @@ const BasicAutocomplete = ({items, onChange}) => (
       selectedItem,
       highlightedIndex,
     }) =>(
-      <MyView {...getRootProps({ refKey: 'innerRef' })}>
-        <TextInput
-          {...getInputProps({ placeholder: 'Favorite color ?' })}
-        />
+      <View {...getRootProps(undefined, { suppressRefError: true })}>
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+            {...getInputProps({ placeholder: 'Favorite color ?' })}
+          />
+          <Button {...getButtonProps()} title={isOpen ? 'Close' : 'Open' } />
+        </View>
         {isOpen ? (
           <View style={{ borderWidth: 1, borderColor: '#ccc' }}>
             {items
@@ -74,7 +70,7 @@ const BasicAutocomplete = ({items, onChange}) => (
               })}
           </View>
         ) : null}
-      </MyView>
+      </View>
     )}
   />
 );
