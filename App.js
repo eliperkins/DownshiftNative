@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Downshift from 'downshift/dist/downshift.esm';
+import Downshift from 'downshift/dist';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
